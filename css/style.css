@@ -1,0 +1,25 @@
+.game {
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.first-board, .second-board {
+    display: grid;
+    grid-template-columns: repeat(10, 2rem);
+    grid-template-rows: repeat(10, 2rem);
+}
+
+.second-board .shot-false {
+    cursor: pointer;
+}
+.gameboard-slot {
+    border: 1px solid black;
+
+}
+.shot-hit {
+    background-color: darkred;
+}
+.shot-miss {
+    background-color: cadetblue;
+}
