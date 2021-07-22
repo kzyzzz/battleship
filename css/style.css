@@ -17,6 +17,9 @@
     border: 1px solid black;
 
 }
+.ship {
+    background-color: khaki;
+}
 .shot-hit {
     background-color: darkred;
 }

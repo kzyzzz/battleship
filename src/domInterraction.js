@@ -1,22 +1,23 @@
-import { board2, gameLoop } from './game';
+import { playerAttacking, gameLoop, render } from './game';
 
 const startGameBtn = document.querySelector('.start-game');
 
 const placeEvents = () => {
   startGameBtn.addEventListener('click', () => {
-    gameLoop();
+    render();
+    addAttackEvents();
+    console.log('stat');
   });
 };
 
 const addAttackEvents = () => {
   const enemyBoard = document.querySelector('.second-board');
-  const enemyBoardDivs = enemyBoard.querySelectorAll('.gameboard-slot');
-  for (let i = 0; i < enemyBoardDivs.length; i += 1) {
-    enemyBoardDivs[i].addEventListener('click', () => {
-      board2.receiveAttack(i);
+  enemyBoard.addEventListener('click', (e) => {
+    const i = parseInt(e.target.className.match(/\d+/)[0], 10);
+    if (playerAttacking(i)) {
       gameLoop();
-    });
-  }
+    }
+  });
 };
 
 const renderBoard = (gameBoard, parentClass) => {
@@ -28,6 +29,15 @@ const renderBoard = (gameBoard, parentClass) => {
   parent.innerHTML = grid;
 };
 
+const renderShips = (gameBoard, parentClass) => {
+  const parent = document.querySelector(parentClass);
+  gameBoard.ships.forEach((ship) => {
+    ship.position.forEach((coord) => {
+      parent.querySelector(`.box-id-${coord}`).classList.add('ship');
+    });
+  });
+};
+
 export {
-  startGameBtn, renderBoard, placeEvents, addAttackEvents,
+  startGameBtn, renderBoard, renderShips, placeEvents, addAttackEvents,
 };
