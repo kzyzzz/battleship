@@ -1,26 +1,30 @@
 import Gameboard from './gameboardFactory';
 import Player from './playerFactory';
 // eslint-disable-next-line import/no-cycle
-import { renderBoard, renderShips, placeEvents } from './domInterraction';
+import { renderBoard, renderShips, loadPage, changePrompt } from './domInterraction';
 
-const board1 = new Gameboard();
-board1.randomiseShips();
+let board1 = new Gameboard();
+let board2 = new Gameboard();
+
+loadPage();
+
 const player1 = new Player({ name: 'Player' });
-
-const board2 = new Gameboard();
-board2.placeShip(10, 3, 'y');
-board2.placeShip(12, 3, 'x');
-
 const player2 = new Player({ name: 'CPU', playerType: 'AI' });
 
-placeEvents();
+function init() {
+  board1 = new Gameboard();
+  board2 = new Gameboard();
+  board2.randomiseShips();
+}
 
 async function gameLoop() {
   checkWinner();
   render();
+  changePrompt('AI move..');
   await board1.aiMove();
   render();
   checkWinner();
+  changePrompt('Your move..');
 }
 
 function playerAttacking(index) {
@@ -37,8 +41,14 @@ function render() {
   renderBoard(board2, '.second-board');
 }
 
-function checkWinner() {
-  if (board1.isAllSunk() || board2.isAllSunk()) console.log('Winner');
+function renderFirstBoard() {
+  renderBoard(board1, '.first-board');
+  renderShips(board1, '.first-board');
 }
 
-export { gameLoop, playerAttacking, render };
+function checkWinner() {
+  if (board1.isAllSunk()) console.log('You Loose..');
+  if (board2.isAllSunk()) console.log('You Win!');
+}
+
+export { gameLoop, playerAttacking, render, renderFirstBoard, init, board1 };

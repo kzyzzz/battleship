@@ -1,13 +1,104 @@
-import { playerAttacking, gameLoop, render } from './game';
+import {
+  playerAttacking, gameLoop, render, renderFirstBoard, init, board1,
+} from './game';
 
 const startGameBtn = document.querySelector('.start-game');
+const rotateBtn = document.querySelector('.rotate-garage');
+const gameDiv = document.querySelector('.game');
+const prompt = document.querySelector('.prompt');
+const firstBoard = document.querySelector('.first-board');
+const drop = document.querySelector('.drop');
 
-const placeEvents = () => {
-  startGameBtn.addEventListener('click', () => {
-    render();
-    addAttackEvents();
-    console.log('stat');
+const addDropEvent = () => {
+  firstBoard.ondrop = function (ev) {
+    ev.preventDefault();
+    const length = parseInt(ev.dataTransfer.getData('length'), 10);
+    const index = parseInt(ev.target.className.match(/\d+/)[0], 10);
+    const orientation = ev.dataTransfer.getData('orientation');
+    if (board1.placeShip(index, length, orientation)) {
+      renderFirstBoard();
+      board1.garage.splice(board1.garage.indexOf(length), 1);
+      removeFromGarage(length);
+      if (board1.garage.length === 0) startGame();
+    }
+  };
+  firstBoard.ondragover = function (ev) {
+    ev.preventDefault();
+  };
+};
+const removeFromGarage = (length) => {
+  let childToRemove = false;
+  drop.childNodes.forEach((node) => {
+    if (node.classList.contains(`length-${length}`)) {
+      childToRemove = node;
+    }
   });
+  if (childToRemove) drop.removeChild(childToRemove);
+};
+const renderGarage = () => {
+  drop.innerHTML = '';
+  drop.style.flexDirection = 'column';
+  board1.garage.forEach((ship) => {
+    const shipDiv = document.createElement('div');
+    shipDiv.classList.add('ship');
+    shipDiv.classList.add('ship-garage');
+    shipDiv.classList.add(`length-${ship}`);
+    shipDiv.style.flexDirection = 'row';
+    shipDiv.draggable = 'true';
+    for (let i = 0; i < ship; i += 1) {
+      shipDiv.innerHTML += '<div class=\'ship-slot\'></div>';
+    }
+    shipDiv.ondragstart = function (ev) {
+      const length = parseInt(ev.target.className.match(/\d+/)[0], 10);
+      ev.dataTransfer.setData('length', length);
+      const orientation = (ev.target.style.flexDirection === 'row') ? 'x' : 'y';
+      ev.dataTransfer.setData('orientation', orientation);
+    };
+    drop.appendChild(shipDiv);
+  });
+};
+
+const loadPage = () => {
+  init();
+  renderFirstBoard();
+  renderGarage();
+  addDropEvent();
+  addBtnEvents();
+  changePrompt('Place your ships..');
+};
+
+const addBtnEvents = () => {
+  startGameBtn.addEventListener('click', () => {
+    board1.randomiseShips();
+    startGame();
+  });
+  rotateBtn.addEventListener('click', () => {
+    rotateGarage();
+  });
+};
+
+const startGame = () => {
+  gameDiv.removeChild(document.querySelector('.garage'));
+  const secondBoard = document.createElement('div');
+  secondBoard.classList.add('second-board');
+  gameDiv.appendChild(secondBoard);
+  render();
+  addAttackEvents();
+  changePrompt('Make your move..');
+};
+
+const rotateGarage = () => {
+  if (drop.style.flexDirection === 'column') {
+    drop.style.flexDirection = 'row';
+    document.querySelectorAll('.ship-garage').forEach((ship) => {
+      ship.style.flexDirection = 'column';
+    });
+  } else {
+    drop.style.flexDirection = 'column';
+    document.querySelectorAll('.ship-garage').forEach((ship) => {
+      ship.style.flexDirection = 'row';
+    });
+  }
 };
 
 const addAttackEvents = () => {
@@ -38,6 +129,10 @@ const renderShips = (gameBoard, parentClass) => {
   });
 };
 
+const changePrompt = (content) => {
+  prompt.innerHTML = `${content}`;
+};
+
 export {
-  startGameBtn, renderBoard, renderShips, placeEvents, addAttackEvents,
+  startGameBtn, renderBoard, renderShips, addAttackEvents, changePrompt, loadPage,
 };

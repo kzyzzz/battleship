@@ -28,7 +28,8 @@ class Gameboard {
       accepted = position.every((i) => i <= 99);
     }
     if (accepted) {
-      accepted = this.ships.every((ship) => ship.position.every((pos) => (position.indexOf(pos) === -1)));
+      accepted = this.ships.every((ship) => ship.position.every((pos) => (
+        position.indexOf(pos) === -1)));
     }
     if (accepted) {
       const newShip = new Ship(position);
@@ -43,12 +44,13 @@ class Gameboard {
     this.ships = [];
     let index = 0;
     let orientation = 'y';
-    this.garage.forEach((shipLength) => {
+    do {
       do {
         index = randomNumber(100);
         orientation = (randomNumber(2) === 0) ? 'x' : 'y';
-      } while (!this.placeShip(index, shipLength, orientation));
-    });
+      } while (!this.placeShip(index, this.garage[0], orientation));
+      this.garage.shift();
+    } while (this.garage.length > 0);
   }
 
   receiveAttack(index) {
@@ -74,11 +76,13 @@ class Gameboard {
         switch (dice) {
           case 0:
             move = this.aiPrevHit - 1;
-            if ((Math.floor(move / 10) === Math.floor(this.aiPrevHit / 10)) && (move >= 0)) niceMove = true;
+            if ((Math.floor(move / 10) === Math.floor(this.aiPrevHit / 10)) && (
+              move >= 0)) niceMove = true;
             break;
           case 1:
             move = this.aiPrevHit + 1;
-            if ((Math.floor(move / 10) === Math.floor(this.aiPrevHit / 10)) && (move < 100)) niceMove = true;
+            if ((Math.floor(move / 10) === Math.floor(this.aiPrevHit / 10)) && (
+              move < 100)) niceMove = true;
             break;
           case 2:
             move = this.aiPrevHit - 10;

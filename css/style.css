@@ -1,13 +1,33 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+:root {
+    font-size: 4vmin;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 10vh;
+}
 .game {
     display: flex;
     width: 100vw;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-around;
 }
 .first-board, .second-board {
     display: grid;
-    grid-template-columns: repeat(10, 2rem);
-    grid-template-rows: repeat(10, 2rem);
+    grid-template-columns: repeat(10, 1.6rem);
+    grid-template-rows: repeat(10, 1.6rem);
 }
 
 .second-board .shot-false {
@@ -25,4 +45,35 @@
 }
 .shot-miss {
     background-color: cadetblue;
+}
+.prompt {
+    padding: 2rem;
+}
+.garage {
+    position: relative;
+}
+.rotate-garage {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.drop {
+    width: 16rem;
+    height: 16rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.ship-slot {
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 1px solid black;
+}
+.ship-garage {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
 }
