@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Roboto&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+}
+:root {
+    font-size: 4vmin;
+    font-family: 'Roboto', sans-serif;
+}
+.header {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    font-size: 1.4rem;
+    font-family: 'Cinzel', serif;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #C7DEC5;
+}
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 10vh;
+}
+.game {
+    display: flex;
+    width: 95vw;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+.first-board, .second-board {
+    display: grid;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    grid-template-columns: repeat(10, 1.6rem);
+    grid-template-rows: repeat(10, 1.6rem);
+}
+
+.second-board .shot-false {
+    cursor: pointer;
+}
+.gameboard-slot {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: #eee;
+
+}
+.ship {
+    background-color: #19458F;
+}
+.shot-hit {
+    background-color: #E53822;
+}
+.shot-miss {
+    background-color: #F4D466;
+}
+.shot-miss::before {
+    content: "x";
+    position: relative;
+    top: calc(50% - 0.6rem);
+    left: calc(50% - 0.3rem);
+    color: rgba(0, 0, 0, 0.4);
+}
+.prompt {
+    padding: 2rem;
+}
+.garage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rotate-garage, .randomize-ships {    
+    border: none;
+    background-color: #51B2CD;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+.randomize-ships {
+    padding: 0.5rem;
+    border-radius: .2rem;
+}
+.rotate-garage {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.randomize-ships:hover, .rotate-garage:hover {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #4DB0CB;
+}
+.rotate-garage:hover {
+    transform: rotate(90deg);
+}
+.drop {
+    overflow: hidden;
+    width: 16rem;
+    height: 16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ship-slot {
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 1px solid black;
+}
+.ship-garage {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+.looser-winner {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+.endgame-msg {
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    color: #eee;
+    font-size: 2.5rem;
+    width: 100vw;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    text-align: center;
+}
+@media (min-width:600px) {
+    :root {
+        font-size: 3vmin;
+    }
+}
+@media only screen and (min-width : 600px) and (orientation: landscape){
+    :root {
+        font-size: 4vmin;
+    }
+    .game {
+        justify-content: space-between;
+        flex-direction: row;
+        height: 100%;
+        max-width: 1000px;
+        max-height: 800px;
+    }
+    .prompt {
+        padding: 0;
+    } 
+}
+
+@media (min-width:801px) {
+    :root {
+        font-size: 2vmin;
+    }
+}
