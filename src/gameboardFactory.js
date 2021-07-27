@@ -41,7 +41,6 @@ class Gameboard {
   }
 
   randomiseShips() {
-    this.ships = [];
     let index = 0;
     let orientation = 'y';
     do {

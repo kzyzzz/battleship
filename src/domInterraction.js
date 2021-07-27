@@ -2,15 +2,18 @@ import {
   playerAttacking, gameLoop, render, renderFirstBoard, init, board1,
 } from './game';
 
-const startGameBtn = document.querySelector('.start-game');
+const randzShipsBtn = document.querySelector('.randomize-ships');
 const rotateBtn = document.querySelector('.rotate-garage');
 const gameDiv = document.querySelector('.game');
 const prompt = document.querySelector('.prompt');
 const firstBoard = document.querySelector('.first-board');
 const drop = document.querySelector('.drop');
+const popUpDiv = document.querySelector('.looser-winner');
+const container = document.querySelector('.container');
+const endGameMsg = document.querySelector('.endgame-msg');
 
 const addDropEvent = () => {
-  firstBoard.ondrop = function (ev) {
+  firstBoard.ondrop = (ev) => {
     ev.preventDefault();
     const length = parseInt(ev.dataTransfer.getData('length'), 10);
     const index = parseInt(ev.target.className.match(/\d+/)[0], 10);
@@ -22,7 +25,7 @@ const addDropEvent = () => {
       if (board1.garage.length === 0) startGame();
     }
   };
-  firstBoard.ondragover = function (ev) {
+  firstBoard.ondragover = (ev) => {
     ev.preventDefault();
   };
 };
@@ -48,7 +51,7 @@ const renderGarage = () => {
     for (let i = 0; i < ship; i += 1) {
       shipDiv.innerHTML += '<div class=\'ship-slot\'></div>';
     }
-    shipDiv.ondragstart = function (ev) {
+    shipDiv.ondragstart = (ev) => {
       const length = parseInt(ev.target.className.match(/\d+/)[0], 10);
       ev.dataTransfer.setData('length', length);
       const orientation = (ev.target.style.flexDirection === 'row') ? 'x' : 'y';
@@ -68,7 +71,7 @@ const loadPage = () => {
 };
 
 const addBtnEvents = () => {
-  startGameBtn.addEventListener('click', () => {
+  randzShipsBtn.addEventListener('click', () => {
     board1.randomiseShips();
     startGame();
   });
@@ -132,7 +135,12 @@ const renderShips = (gameBoard, parentClass) => {
 const changePrompt = (content) => {
   prompt.innerHTML = `${content}`;
 };
+const endGame = (message) => {
+  container.style.filter = 'blur(2px)';
+  popUpDiv.style.display = 'flex';
+  endGameMsg.textContent = message;
+};
 
 export {
-  startGameBtn, renderBoard, renderShips, addAttackEvents, changePrompt, loadPage,
+  randzShipsBtn, endGame, renderBoard, renderShips, addAttackEvents, changePrompt, loadPage,
 };

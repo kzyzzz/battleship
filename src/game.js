@@ -1,7 +1,9 @@
 import Gameboard from './gameboardFactory';
 import Player from './playerFactory';
 // eslint-disable-next-line import/no-cycle
-import { renderBoard, renderShips, loadPage, changePrompt } from './domInterraction';
+import {
+  renderBoard, renderShips, loadPage, changePrompt, endGame
+} from './domInterraction';
 
 let board1 = new Gameboard();
 let board2 = new Gameboard();
@@ -47,8 +49,8 @@ function renderFirstBoard() {
 }
 
 function checkWinner() {
-  if (board1.isAllSunk()) console.log('You Loose..');
-  if (board2.isAllSunk()) console.log('You Win!');
+  if (board1.isAllSunk()) endGame('You loose..');
+  if (board2.isAllSunk()) endGame('You Win!');
 }
 
 export { gameLoop, playerAttacking, render, renderFirstBoard, init, board1 };
