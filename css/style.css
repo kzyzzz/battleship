@@ -18,8 +18,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    height: -webkit-fill-available;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     background-color: #C7DEC5;
 }
 .controls {
