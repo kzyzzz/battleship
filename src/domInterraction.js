@@ -51,7 +51,7 @@ const renderGarage = () => {
     for (let i = 0; i < ship; i += 1) {
       shipDiv.innerHTML += '<div class=\'ship-slot\'></div>';
     }
-    shipDiv.ondragstart = (ev) => {
+    drop.ondragstart = (ev) => {
       const length = parseInt(ev.target.className.match(/\d+/)[0], 10);
       ev.dataTransfer.setData('length', length);
       const orientation = (ev.target.style.flexDirection === 'row') ? 'x' : 'y';
